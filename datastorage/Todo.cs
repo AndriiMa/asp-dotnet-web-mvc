@@ -6,16 +6,16 @@ namespace csharp_mvc
     public class Todo
     {
 
-        private List<Goal> goals = new List<Goal>();
+        private static List<Goal> goals = new List<Goal>();
 
-        public void AddGoal(Goal goal)
+        public static void AddGoal(Goal goal)
         {
-            this.goals.Add(goal);
+            goals.Add(goal);
         }
 
-        public List<Goal> GetGoals()
+        public static List<Goal> GetGoals()
         {
-            return this.goals;
+            return goals;
         }
     }
 }

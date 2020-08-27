@@ -4,13 +4,18 @@ namespace csharp_mvc
 {
     public class Goal
     {
-        private String name;
-        private bool done;
+        public String name{get; set;}
+        public bool done{get;set;}
 
+        
         public Goal(string name, bool done)
         {
             this.name = name;
             this.done = done;
+        }
+
+        public Goal()
+        {
         }
 
         public String GetName()
