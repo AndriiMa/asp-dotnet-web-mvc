@@ -37,7 +37,5 @@ namespace csharp_mvc
         {
             this.done = done;
         }
-
-
     }
 }

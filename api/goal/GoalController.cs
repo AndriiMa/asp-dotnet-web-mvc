@@ -10,19 +10,19 @@ namespace csharp_mvc
     {
 
         [HttpGet("")]
-        public IEnumerable<Goal> GetGoals()
+        public TodoDto GetGoals()
         {
             TodoDto dto = new TodoDto();
             dto.goals = Todo.GetGoals();
-            return dto.goals;
+            return dto;
         }
 
         [HttpPost("")]
-        public void CreateNewTask([FromBody]Goal goal)
+        public void CreateNewTask([FromBody] GoalDto dto)
         {
+            Goal goal = new Goal(dto.name, dto.done);
             Todo.AddGoal(goal);
         }
-
     }
 
 }
