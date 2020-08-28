@@ -48,9 +48,9 @@ namespace csharp_mvc
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
-                using (var writer = new NpgsqlCommand("inserto into tasks (name, done) values(@name, @done)"))
+                using (var writer = new NpgsqlCommand("inserto into tasks (task_name, done) values(@task_name, @done)"))
                 {
-                    writer.Parameters.AddWithValue("name", goal.GetName());
+                    writer.Parameters.AddWithValue("task_name", goal.GetName());
                     writer.Parameters.AddWithValue("done", goal.IsDone());
                     writer.ExecuteNonQuery();
                 }
@@ -76,7 +76,7 @@ namespace csharp_mvc
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
-                NpgsqlCommand query = new NpgsqlCommand("select id, name, done from tasks where id = @id", connection);
+                NpgsqlCommand query = new NpgsqlCommand("select id, task_name, done from tasks where id = @id", connection);
                 query.Parameters.AddWithValue("id", id);
                 using (NpgsqlDataReader reader = query.ExecuteReader())
                 {
@@ -96,9 +96,9 @@ namespace csharp_mvc
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
-                NpgsqlCommand query = new NpgsqlCommand("update tasks set name = @name, done= @done where id = @id", connection);
+                NpgsqlCommand query = new NpgsqlCommand("update tasks set task_name = @task_name, done= @done where id = @id", connection);
                 query.Parameters.AddWithValue("id", goal.GetId());
-                query.Parameters.AddWithValue("name", goal.GetName());
+                query.Parameters.AddWithValue("task_name", goal.GetName());
                 query.Parameters.AddWithValue("done", goal.IsDone());
 
                 query.ExecuteNonQuery();

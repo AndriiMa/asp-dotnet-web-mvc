@@ -6,7 +6,7 @@ namespace csharp_mvc
 {
     [Route("/tasks")]
     [ApiController]
-    public class GoalController : Controller
+    public class GoalController : ControllerBase
     {
         private GoalRepository goalRepository = GoalRepository.GetInstance();
         private GoalMapper goalMapper = new GoalMapper();
@@ -38,8 +38,6 @@ namespace csharp_mvc
             Goal goal = goalRepository.GetGoalById(id);
             return goalMapper.MapToDto(goal);
         }
-
-        
     }
 
 }
