@@ -48,7 +48,8 @@ namespace csharp_mvc
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
-                using (var writer = new NpgsqlCommand("inserto into tasks (task_name, done) values(@task_name, @done)"))
+                using (var writer = new NpgsqlCommand(
+                    "insert into tasks (task_name, done) values(@task_name, @done)", connection))
                 {
                     writer.Parameters.AddWithValue("task_name", goal.GetName());
                     writer.Parameters.AddWithValue("done", goal.IsDone());
@@ -62,7 +63,7 @@ namespace csharp_mvc
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
-                using (var writer = new NpgsqlCommand("delete from tasks where id = @id"))
+                using (var writer = new NpgsqlCommand("delete from tasks where id = @id", connection))
                 {
                     writer.Parameters.AddWithValue("id", id);
                     writer.ExecuteNonQuery();
