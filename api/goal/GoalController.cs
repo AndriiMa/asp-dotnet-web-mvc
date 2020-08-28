@@ -8,12 +8,13 @@ namespace csharp_mvc
     [ApiController]
     public class GoalController : Controller
     {
+        private GoalRepository goalRepository = GoalRepository.GetInstance();
 
         [HttpGet("")]
         public TodoDto GetGoals()
         {
             TodoDto dto = new TodoDto();
-            dto.goals = Todo.GetGoals();
+            dto.goals = goalRepository.GetAllGoals();
             return dto;
         }
 
@@ -21,7 +22,7 @@ namespace csharp_mvc
         public void CreateNewTask([FromBody] GoalDto dto)
         {
             Goal goal = new Goal(dto.name, dto.done);
-            Todo.AddGoal(goal);
+            goalRepository.SaveGoal(goal);
         }
     }
 
