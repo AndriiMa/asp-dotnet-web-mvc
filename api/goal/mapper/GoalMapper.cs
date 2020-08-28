@@ -10,9 +10,9 @@ namespace csharp_mvc
         public GoalDto MapToDto(Goal entity)
         {
             GoalDto dto = new GoalDto();
-            dto.SetId(entity.GetId());
-            dto.SetName(entity.GetName());
-            dto.SetDone(entity.IsDone());
+            dto.id = entity.GetId();
+            dto.name = entity.GetName();
+            dto.done = entity.IsDone();
 
             return dto;
         }
