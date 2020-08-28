@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using Npgsql;
@@ -29,22 +30,20 @@ namespace csharp_mvc
                 connection.Open();
                 NpgsqlCommand query = new NpgsqlCommand("select * from tasks", connection);
 
-                using (var readed = query.ExecuteReader())
+                using (var reader = query.ExecuteReader())
                 {
-                    while (readed.Read())
+                    while (reader.Read())
                     {
-                        goals.Add(new Goal()
-                        {
-                            name = readed.GetString(1),
-                            done = readed.GetBoolean(2)
-                        });
+                        goals.Add(new Goal(
+                            reader.GetString(1),
+                            reader.GetBoolean(2)));
                     }
                 }
             }
             return goals;
         }
 
-        public void SaveGoal(Goal goal)
+        public void SaveNewGoal(Goal goal)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
@@ -52,12 +51,60 @@ namespace csharp_mvc
                 using (var writer = new NpgsqlCommand("inserto into tasks (name, done) values(@name, @done)"))
                 {
                     writer.Parameters.AddWithValue("name", goal.GetName());
-                    writer.Parameters.AddWithValue("done", goal.isDone());
+                    writer.Parameters.AddWithValue("done", goal.IsDone());
                     writer.ExecuteNonQuery();
                 }
             }
         }
 
+        public void DeleteGoalById(int id)
+        {
+            using (NpgsqlConnection connection = DatabaseService.CreateConnection())
+            {
+                connection.Open();
+                using (var writer = new NpgsqlCommand("delete from tasks where id = @id"))
+                {
+                    writer.Parameters.AddWithValue("id", id);
+                    writer.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public Goal GetGoalById(int id)
+        {
+            Goal goal;
+            using (NpgsqlConnection connection = DatabaseService.CreateConnection())
+            {
+                connection.Open();
+                NpgsqlCommand query = new NpgsqlCommand("select id, name, done from tasks where id = @id", connection);
+                query.Parameters.AddWithValue("id", id);
+                using (NpgsqlDataReader reader = query.ExecuteReader())
+                {
+                    reader.Read();
+                    goal = new Goal(
+                    reader.GetInt32(0),
+                    reader.GetString(1),
+                    reader.GetBoolean(2));
+
+                }
+            }
+            return goal;
+        }
+
+        public void UpdateGoal(Goal goal)
+        {
+            using (NpgsqlConnection connection = DatabaseService.CreateConnection())
+            {
+                connection.Open();
+                NpgsqlCommand query = new NpgsqlCommand("update tasks set name = @name, done= @done where id = @id", connection);
+                query.Parameters.AddWithValue("id", goal.GetId());
+                query.Parameters.AddWithValue("name", goal.GetName());
+                query.Parameters.AddWithValue("done", goal.IsDone());
+
+                query.ExecuteNonQuery();
+            }
+
+        }
     }
 
 }

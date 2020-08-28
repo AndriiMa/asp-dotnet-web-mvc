@@ -22,7 +22,7 @@ namespace csharp_mvc
         public void CreateNewTask([FromBody] GoalDto dto)
         {
             Goal goal = new Goal(dto.name, dto.done);
-            goalRepository.SaveGoal(goal);
+            goalRepository.SaveNewGoal(goal);
         }
     }
 

@@ -4,18 +4,21 @@ namespace csharp_mvc
 {
     public class Goal
     {
-        public String name{get; set;}
-        public bool done{get;set;}
+        private int id { get; set; }
+        private String name { get; set; }
+        private bool done { get; set; }
 
-        
         public Goal(string name, bool done)
         {
             this.name = name;
             this.done = done;
         }
 
-        public Goal()
+        public Goal(int id, string name, bool done)
         {
+            this.id = id;
+            this.name = name;
+            this.done = done;
         }
 
         public String GetName()
@@ -23,7 +26,7 @@ namespace csharp_mvc
             return this.name;
         }
 
-        public bool isDone()
+        public bool IsDone()
         {
             return this.done;
         }
@@ -36,6 +39,16 @@ namespace csharp_mvc
         public void setDone(bool done)
         {
             this.done = done;
+        }
+
+        public int GetId()
+        {
+            return this.id;
+        }
+
+        public void SetId(int id)
+        {
+            this.id = id;
         }
     }
 }
