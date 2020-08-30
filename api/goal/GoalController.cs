@@ -20,10 +20,11 @@ namespace csharp_mvc
         }
 
         [HttpPost("")]
-        public void CreateNewGoal([FromBody] GoalDto dto)
+        public GoalDto CreateNewGoal([FromBody] GoalDto dto)
         {
             Goal goal = new Goal(dto.name, dto.done);
-            goalRepository.SaveNewGoal(goal);
+            Goal savedGoal = goalRepository.SaveNewGoal(goal);
+            return goalMapper.MapToDto(savedGoal);
         }
 
         [HttpDelete("/{id}")]
