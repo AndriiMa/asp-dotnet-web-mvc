@@ -12,9 +12,9 @@ namespace csharp_mvc
             var connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = "localhost",
-                Port = 5433,
+                Port = 5432,
                 Username = "postgres",
-                Password = "admin",
+                Password = "123",
                 Database = "todo_tasks"
             };
 
