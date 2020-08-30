@@ -22,7 +22,7 @@ namespace csharp_mvc
             return instance;
         }
 
-        public List<Goal> GetAllGoals()
+        public List<Goal> GetAll()
         {
             List<Goal> goals = new List<Goal>();
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
@@ -44,7 +44,7 @@ namespace csharp_mvc
             return goals;
         }
 
-        public Goal SaveNewGoal(Goal goal)
+        public Goal SaveNew(Goal goal)
 
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
@@ -69,7 +69,7 @@ namespace csharp_mvc
         }
 
 
-        public void DeleteGoalById(int id)
+        public void DeleteById(int id)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
@@ -82,7 +82,7 @@ namespace csharp_mvc
             }
         }
 
-        public Goal GetGoalById(int id)
+        public Goal GetById(int id)
         {
             Goal goal;
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
@@ -103,7 +103,7 @@ namespace csharp_mvc
             return goal;
         }
 
-        public void UpdateGoal(Goal goal)
+        public void Update(Goal goal)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
