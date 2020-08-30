@@ -27,6 +27,12 @@ namespace csharp_mvc
             return goalMapper.MapToDto(savedGoal);
         }
 
+        [HttpPost("/{id}")]
+        public void UpdateGoal(int id, [FromBody] GoalDto dto){
+            Goal goal = new Goal(id, dto.name, dto.done);
+            goalRepository.UpdateGoal(goal);
+        }
+
         [HttpDelete("/{id}")]
         public void DeleteGoalById(int id)
         {
