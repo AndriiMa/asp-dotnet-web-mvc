@@ -31,6 +31,13 @@ namespace csharp_mvc
             return scheduleMapper.MapToDto(savedSchedule);
         }
 
+        [HttpPost("/{id}")]
+        public void UpdateScheduleById(int id, [FromBody] ScheduleDto dto)
+        {
+            Schedule schedule = scheduleMapper.MapToObject(dto);
+            scheduleRepository.Update(schedule);
+        }
+
 
     }
 
