@@ -17,6 +17,20 @@ namespace csharp_mvc
             return scheduleMapper.MapToDto(schedule);
         }
 
+        [HttpDelete("/{id}")]
+        public void DeleteScheduleById(int id)
+        {
+            scheduleRepository.DeleteById(id);
+        }
+
+        [HttpPost("")]
+        public ScheduleDto SaveNewSchedule([FromBody] ScheduleDto dto)
+        {
+            Schedule newSchedule = scheduleMapper.MapToObject(dto);
+            Schedule savedSchedule = scheduleRepository.SaveNew(newSchedule);
+            return scheduleMapper.MapToDto(savedSchedule);
+        }
+
 
     }
 

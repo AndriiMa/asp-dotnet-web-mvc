@@ -13,5 +13,16 @@ namespace csharp_mvc
 
             return dto;
         }
+
+        public Schedule MapToObject(ScheduleDto dto)
+        {
+            Schedule obj = new Schedule(
+                dto.id,
+                dto.name,
+                dto.description
+            );
+            return obj;
+
+        }
     }
 }
