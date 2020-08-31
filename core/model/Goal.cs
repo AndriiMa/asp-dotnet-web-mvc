@@ -10,17 +10,19 @@ namespace csharp_mvc
 
         private int scheduleId { get; set; }
 
-        public Goal(string name, bool done)
+        public Goal(string name, bool done, int scheduleId)
         {
             this.name = name;
             this.done = done;
+            this.scheduleId = scheduleId;
         }
 
-        public Goal(int id, string name, bool done)
+        public Goal(int id, string name, bool done, int scheduleId)
         {
             this.id = id;
             this.name = name;
             this.done = done;
+            this.scheduleId = scheduleId;
         }
 
         public String GetName()

@@ -9,6 +9,8 @@ namespace csharp_mvc
         public String name { get; set; }
         public bool done { get; set; }
 
+        public int scheduleId { get; set; }
+
     }
 
 }

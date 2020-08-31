@@ -13,8 +13,21 @@ namespace csharp_mvc
             dto.id = entity.GetId();
             dto.name = entity.GetName();
             dto.done = entity.IsDone();
+            dto.scheduleId = entity.GetScheduleId();
 
             return dto;
+        }
+
+        public Goal MapToObject(GoalDto dto)
+        {
+            Goal goal = new Goal(
+                dto.id,
+                dto.name,
+                dto.done,
+                dto.scheduleId
+            );
+
+            return goal;
         }
 
         public List<GoalDto> MapToList(List<Goal> entityes)

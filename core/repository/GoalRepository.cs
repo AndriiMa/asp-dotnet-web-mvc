@@ -37,7 +37,8 @@ namespace csharp_mvc
                         goals.Add(new Goal(
                             reader.GetInt32(0),
                             reader.GetString(1),
-                            reader.GetBoolean(2)));
+                            reader.GetBoolean(2),
+                            reader.GetInt32(3)));
                     }
                 }
             }
@@ -45,16 +46,16 @@ namespace csharp_mvc
         }
 
         public Goal SaveNew(Goal goal)
-
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
                 using (NpgsqlCommand cmd = new NpgsqlCommand(
-                    "insert into tasks (task_name, done) values(@task_name, @done) returning id", connection))
+                    "insert into tasks (task_name, done, schedule_id) values(@task_name, @done, @schedule_id) returning id", connection))
                 {
                     cmd.Parameters.AddWithValue("task_name", goal.GetName());
                     cmd.Parameters.AddWithValue("done", goal.IsDone());
+                    cmd.Parameters.AddWithValue("schedule_id", goal.IsDone());
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -98,7 +99,8 @@ namespace csharp_mvc
                     goal = new Goal(
                     reader.GetInt32(0),
                     reader.GetString(1),
-                    reader.GetBoolean(2));
+                    reader.GetBoolean(2),
+                    reader.GetInt32(3));
 
                 }
             }
@@ -135,7 +137,8 @@ namespace csharp_mvc
                         goals.Add(new Goal(
                         reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetBoolean(2)));
+                        reader.GetBoolean(2),
+                        reader.GetInt32(3)));
                     }
                 }
             }

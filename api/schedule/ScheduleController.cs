@@ -55,6 +55,14 @@ namespace csharp_mvc
             goalRepository.DeleteByScheduleId(id);
         }
 
+        [HttpPost("/{id}/tasks")]
+        public void CreateNewGoal(int id, GoalDto dto)
+        {
+            Goal goal = goalMapper.MapToObject(dto);
+            goal.SetScheduleId(id);
+            goalRepository.SaveNew(goal);
+        }
+
     }
 
 }
