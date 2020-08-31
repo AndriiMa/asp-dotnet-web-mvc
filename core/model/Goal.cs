@@ -63,7 +63,5 @@ namespace csharp_mvc
         {
             this.scheduleId = scheduleId;
         }
-
-
     }
 }

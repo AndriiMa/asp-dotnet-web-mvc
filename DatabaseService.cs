@@ -14,7 +14,7 @@ namespace csharp_mvc
                 Host = "localhost",
                 Port = 5432,
                 Username = "postgres",
-                Password = "admin",
+                Password = "123",
                 Database = "todo_tasks"
             };
 

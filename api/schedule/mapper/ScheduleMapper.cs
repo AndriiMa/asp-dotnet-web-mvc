@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace csharp_mvc
 {
@@ -23,6 +25,15 @@ namespace csharp_mvc
             );
             return obj;
 
+        }
+
+        public List<ScheduleDto> MapToList(List<Schedule> entityes)
+        {
+            List<ScheduleDto> dtos = new List<ScheduleDto>();
+            dtos = entityes.Select(e => MapToDto(e))
+            .ToList();
+
+            return dtos;
         }
     }
 }

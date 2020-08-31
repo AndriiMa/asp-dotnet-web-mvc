@@ -13,6 +13,14 @@ namespace csharp_mvc
         private ScheduleMapper scheduleMapper = new ScheduleMapper();
         private GoalMapper goalMapper = new GoalMapper();
 
+
+        [HttpGet("")]
+        public List<ScheduleDto> GetAllSchedules()
+        {
+            List<Schedule> schedules = scheduleRepository.GetAll();
+            return scheduleMapper.MapToList(schedules);
+        }
+
         [HttpGet("/{id}")]
         public ScheduleDto GetScheduleById(int id)
         {
