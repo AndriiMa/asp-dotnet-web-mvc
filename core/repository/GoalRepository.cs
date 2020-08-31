@@ -69,6 +69,8 @@ namespace csharp_mvc
         }
 
 
+
+
         public void DeleteById(int id)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
@@ -116,6 +118,41 @@ namespace csharp_mvc
                 query.ExecuteNonQuery();
             }
 
+        }
+
+        public List<Goal> GetByScheduleId(int id)
+        {
+            List<Goal> goals = new List<Goal>();
+            using (NpgsqlConnection connection = DatabaseService.CreateConnection())
+            {
+                connection.Open();
+                NpgsqlCommand query = new NpgsqlCommand("select id, task_name, done from tasks where schedule_id = @schedule_id", connection);
+                query.Parameters.AddWithValue("schedule_id", id);
+                using (NpgsqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        goals.Add(new Goal(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetBoolean(2)));
+                    }
+                }
+            }
+            return goals;
+        }
+
+        public void DeleteByScheduleId(int id)
+        {
+            using (NpgsqlConnection connection = DatabaseService.CreateConnection())
+            {
+                connection.Open();
+                using (var writer = new NpgsqlCommand("delete from tasks where schedule_id = @schedule_id", connection))
+                {
+                    writer.Parameters.AddWithValue("schedule_id", id);
+                    writer.ExecuteNonQuery();
+                }
+            }
         }
     }
 

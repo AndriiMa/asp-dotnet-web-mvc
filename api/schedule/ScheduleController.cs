@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csharp_mvc
@@ -8,7 +9,9 @@ namespace csharp_mvc
     public class ScheduleController : ControllerBase
     {
         private ScheduleRepository scheduleRepository = ScheduleRepository.GetInstance();
+        private GoalRepository goalRepository = GoalRepository.GetInstance();
         private ScheduleMapper scheduleMapper = new ScheduleMapper();
+        private GoalMapper goalMapper = new GoalMapper();
 
         [HttpGet("/{id}")]
         public ScheduleDto GetScheduleById(int id)
@@ -21,6 +24,7 @@ namespace csharp_mvc
         public void DeleteScheduleById(int id)
         {
             scheduleRepository.DeleteById(id);
+            goalRepository.DeleteByScheduleId(id);
         }
 
         [HttpPost("")]
@@ -38,6 +42,18 @@ namespace csharp_mvc
             scheduleRepository.Update(schedule);
         }
 
+        [HttpGet("/{id}/tasks")]
+        public List<GoalDto> GetGoalsByScheduleId(int id)
+        {
+            List<Goal> goals = goalRepository.GetByScheduleId(id);
+            return goalMapper.MapToList(goals);
+        }
+
+        [HttpDelete("/{id}/tasks")]
+        public void DeleteByScheduleId(int id)
+        {
+            goalRepository.DeleteByScheduleId(id);
+        }
 
     }
 

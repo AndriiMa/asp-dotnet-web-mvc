@@ -8,6 +8,8 @@ namespace csharp_mvc
         private String name { get; set; }
         private bool done { get; set; }
 
+        private int scheduleId { get; set; }
+
         public Goal(string name, bool done)
         {
             this.name = name;
@@ -50,5 +52,16 @@ namespace csharp_mvc
         {
             this.id = id;
         }
+        public int GetScheduleId()
+        {
+            return this.scheduleId;
+        }
+
+        public void SetScheduleId(int scheduleId)
+        {
+            this.scheduleId = scheduleId;
+        }
+
+
     }
 }
