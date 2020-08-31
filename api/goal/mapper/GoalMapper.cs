@@ -30,6 +30,17 @@ namespace csharp_mvc
             return goal;
         }
 
+        public Goal MapToObject(NewGoalDto dto)
+        {
+            Goal goal = new Goal(
+                dto.name,
+                dto.done,
+                0
+            );
+
+            return goal;
+        }
+
         public List<GoalDto> MapToList(List<Goal> entityes)
         {
             List<GoalDto> dtos = new List<GoalDto>();

@@ -56,11 +56,12 @@ namespace csharp_mvc
         }
 
         [HttpPost("/{id}/tasks")]
-        public void CreateNewGoal(int id, GoalDto dto)
+        public GoalDto CreateNewGoal(int id, NewGoalDto dto)
         {
             Goal goal = goalMapper.MapToObject(dto);
             goal.SetScheduleId(id);
-            goalRepository.SaveNew(goal);
+            Goal createdGoal = goalRepository.SaveNew(goal);
+            return goalMapper.MapToDto(createdGoal);
         }
 
     }

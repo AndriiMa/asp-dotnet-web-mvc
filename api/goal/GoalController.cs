@@ -28,8 +28,7 @@ namespace csharp_mvc
         }
 
         [HttpPost("/{id}")]
-        public void UpdateGoal(int id, [FromBody] GoalDto dto)
-        {
+        public void UpdateGoal(int id, [FromBody] GoalDto dto){
             Goal goal = new Goal(id, dto.name, dto.done, dto.scheduleId);
             goalRepository.Update(goal);
         }
