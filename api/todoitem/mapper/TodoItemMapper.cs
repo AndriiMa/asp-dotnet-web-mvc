@@ -4,23 +4,23 @@ using System.Linq;
 namespace csharp_mvc
 {
 
-    public class GoalMapper
+    public class TodoItemMapper
     {
 
-        public GoalDto MapToDto(Goal entity)
+        public TodoItemDto MapToDto(TodoItem entity)
         {
-            GoalDto dto = new GoalDto();
+            TodoItemDto dto = new TodoItemDto();
             dto.id = entity.GetId();
             dto.name = entity.GetName();
             dto.done = entity.IsDone();
-            dto.scheduleId = entity.GetScheduleId();
+            dto.scheduleId = entity.GetTodoListId();
 
             return dto;
         }
 
-        public Goal MapToObject(GoalDto dto)
+        public TodoItem MapToObject(TodoItemDto dto)
         {
-            Goal goal = new Goal(
+            TodoItem goal = new TodoItem(
                 dto.id,
                 dto.name,
                 dto.done,
@@ -30,9 +30,9 @@ namespace csharp_mvc
             return goal;
         }
 
-        public Goal MapToObject(NewGoalDto dto)
+        public TodoItem MapToObject(NewTodoItemDto dto)
         {
-            Goal goal = new Goal(
+            TodoItem goal = new TodoItem(
                 dto.name,
                 dto.done,
                 0
@@ -41,9 +41,9 @@ namespace csharp_mvc
             return goal;
         }
 
-        public List<GoalDto> MapToList(List<Goal> entityes)
+        public List<TodoItemDto> MapToList(List<TodoItem> entityes)
         {
-            List<GoalDto> dtos = new List<GoalDto>();
+            List<TodoItemDto> dtos = new List<TodoItemDto>();
             dtos = entityes.Select(e => MapToDto(e))
             .ToList();
 

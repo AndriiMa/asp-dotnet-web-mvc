@@ -2,15 +2,13 @@ using System;
 
 namespace csharp_mvc
 {
-
-    public class GoalDto
+    public class TodoListDto
     {
         public int id { get; set; }
-        public String name { get; set; }
-        public bool done { get; set; }
 
-        public int scheduleId { get; set; }
+        public String name { get; set; }
+
+        public String description { get; set; }
 
     }
-
 }

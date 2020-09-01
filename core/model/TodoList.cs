@@ -2,15 +2,14 @@ using System;
 
 namespace csharp_mvc
 {
-
-    public class Schedule
+    public class TodoList
     {
 
         private int id;
         private String name;
         private String description;
 
-        public Schedule(int id, string name, string description)
+        public TodoList(int id, string name, string description)
         {
             this.id = id;
             this.name = name;

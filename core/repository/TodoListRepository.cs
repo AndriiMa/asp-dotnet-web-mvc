@@ -4,26 +4,26 @@ using Npgsql;
 namespace csharp_mvc
 {
 
-    public class ScheduleRepository
+    public class TodoListRepository
     {
 
-        private ScheduleRepository() { }
+        private TodoListRepository() { }
 
-        private static ScheduleRepository instance;
+        private static TodoListRepository instance;
 
-        public static ScheduleRepository GetInstance()
+        public static TodoListRepository GetInstance()
         {
             if (instance == null)
             {
-                instance = new ScheduleRepository();
+                instance = new TodoListRepository();
             }
             return instance;
         }
 
 
-        public List<Schedule> GetAll()
+        public List<TodoList> GetAll()
         {
-            List<Schedule> schedules = new List<Schedule>();
+            List<TodoList> todoLists = new List<TodoList>();
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
@@ -33,17 +33,17 @@ namespace csharp_mvc
                 {
                     while (reader.Read())
                     {
-                        schedules.Add(new Schedule(
+                        todoLists.Add(new TodoList(
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2)));
                     }
                 }
             }
-            return schedules;
+            return todoLists;
         }
 
-        public Schedule SaveNew(Schedule schedule)
+        public TodoList SaveNew(TodoList todolist)
 
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
@@ -52,19 +52,19 @@ namespace csharp_mvc
                 using (NpgsqlCommand cmd = new NpgsqlCommand(
                     "insert into schedules (name, description) values(@name, @description) returning id", connection))
                 {
-                    cmd.Parameters.AddWithValue("name", schedule.GetName());
-                    cmd.Parameters.AddWithValue("description", schedule.GetDescription());
+                    cmd.Parameters.AddWithValue("name", todolist.GetName());
+                    cmd.Parameters.AddWithValue("description", todolist.GetDescription());
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            schedule.SetId(reader.GetInt32(0));
+                            todolist.SetId(reader.GetInt32(0));
                         }
                     }
                 }
 
             }
-            return schedule;
+            return todolist;
         }
 
 
@@ -81,9 +81,9 @@ namespace csharp_mvc
             }
         }
 
-        public Schedule GetById(int id)
+        public TodoList GetById(int id)
         {
-            Schedule schedule;
+            TodoList todoList;
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
@@ -92,25 +92,25 @@ namespace csharp_mvc
                 using (NpgsqlDataReader reader = query.ExecuteReader())
                 {
                     reader.Read();
-                    schedule = new Schedule(
+                    todoList = new TodoList(
                     reader.GetInt32(0),
                     reader.GetString(1),
                     reader.GetString(2));
 
                 }
             }
-            return schedule;
+            return todoList;
         }
 
-        public void Update(Schedule schedule)
+        public void Update(TodoList todoList)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
                 NpgsqlCommand query = new NpgsqlCommand("update schedules set name = @name, description= @description where id = @id", connection);
-                query.Parameters.AddWithValue("id", schedule.GetId());
-                query.Parameters.AddWithValue("task_name", schedule.GetName());
-                query.Parameters.AddWithValue("description", schedule.GetDescription());
+                query.Parameters.AddWithValue("id", todoList.GetId());
+                query.Parameters.AddWithValue("task_name", todoList.GetName());
+                query.Parameters.AddWithValue("description", todoList.GetDescription());
                 query.ExecuteNonQuery();
             }
         }

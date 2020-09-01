@@ -6,25 +6,25 @@ using Npgsql;
 namespace csharp_mvc
 {
 
-    public class GoalRepository
+    public class TodoItemRepository
     {
 
-        private GoalRepository() { }
+        private TodoItemRepository() { }
 
-        private static GoalRepository instance;
+        private static TodoItemRepository instance;
 
-        public static GoalRepository GetInstance()
+        public static TodoItemRepository GetInstance()
         {
             if (instance == null)
             {
-                instance = new GoalRepository();
+                instance = new TodoItemRepository();
             }
             return instance;
         }
 
-        public List<Goal> GetAll()
+        public List<TodoItem> GetAll()
         {
-            List<Goal> goals = new List<Goal>();
+            List<TodoItem> todoItems = new List<TodoItem>();
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
@@ -34,7 +34,7 @@ namespace csharp_mvc
                 {
                     while (reader.Read())
                     {
-                        goals.Add(new Goal(
+                        todoItems.Add(new TodoItem(
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetBoolean(2),
@@ -42,10 +42,10 @@ namespace csharp_mvc
                     }
                 }
             }
-            return goals;
+            return todoItems;
         }
 
-        public Goal SaveNew(Goal goal)
+        public TodoItem SaveNew(TodoItem todoItem)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
@@ -53,20 +53,20 @@ namespace csharp_mvc
                 using (NpgsqlCommand cmd = new NpgsqlCommand(
                     "insert into tasks (task_name, done, schedule_id) values(@task_name, @done, @schedule_id) returning id", connection))
                 {
-                    cmd.Parameters.AddWithValue("task_name", goal.GetName());
-                    cmd.Parameters.AddWithValue("done", goal.IsDone());
-                    cmd.Parameters.AddWithValue("schedule_id", goal.IsDone());
+                    cmd.Parameters.AddWithValue("task_name", todoItem.GetName());
+                    cmd.Parameters.AddWithValue("done", todoItem.IsDone());
+                    cmd.Parameters.AddWithValue("schedule_id", todoItem.IsDone());
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            goal.SetId(reader.GetInt32(0));
+                            todoItem.SetId(reader.GetInt32(0));
                         }
                     }
                 }
 
             }
-            return goal;
+            return todoItem;
         }
 
 
@@ -85,9 +85,9 @@ namespace csharp_mvc
             }
         }
 
-        public Goal GetById(int id)
+        public TodoItem GetById(int id)
         {
-            Goal goal;
+            TodoItem todoItem;
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
@@ -96,7 +96,7 @@ namespace csharp_mvc
                 using (NpgsqlDataReader reader = query.ExecuteReader())
                 {
                     reader.Read();
-                    goal = new Goal(
+                    todoItem = new TodoItem(
                     reader.GetInt32(0),
                     reader.GetString(1),
                     reader.GetBoolean(2),
@@ -104,27 +104,27 @@ namespace csharp_mvc
 
                 }
             }
-            return goal;
+            return todoItem;
         }
 
-        public void Update(Goal goal)
+        public void Update(TodoItem todoItem)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
                 NpgsqlCommand query = new NpgsqlCommand("update tasks set task_name = @task_name, done= @done where id = @id", connection);
-                query.Parameters.AddWithValue("id", goal.GetId());
-                query.Parameters.AddWithValue("task_name", goal.GetName());
-                query.Parameters.AddWithValue("done", goal.IsDone());
+                query.Parameters.AddWithValue("id", todoItem.GetId());
+                query.Parameters.AddWithValue("task_name", todoItem.GetName());
+                query.Parameters.AddWithValue("done", todoItem.IsDone());
 
                 query.ExecuteNonQuery();
             }
 
         }
 
-        public List<Goal> GetByScheduleId(int id)
+        public List<TodoItem> GetByTodoListId(int id)
         {
-            List<Goal> goals = new List<Goal>();
+            List<TodoItem> todoItems = new List<TodoItem>();
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {
                 connection.Open();
@@ -134,7 +134,7 @@ namespace csharp_mvc
                 {
                     while (reader.Read())
                     {
-                        goals.Add(new Goal(
+                        todoItems.Add(new TodoItem(
                         reader.GetInt32(0),
                         reader.GetString(1),
                         reader.GetBoolean(2),
@@ -142,10 +142,10 @@ namespace csharp_mvc
                     }
                 }
             }
-            return goals;
+            return todoItems;
         }
 
-        public void DeleteByScheduleId(int id)
+        public void DeleteByTodoListId(int id)
         {
             using (NpgsqlConnection connection = DatabaseService.CreateConnection())
             {

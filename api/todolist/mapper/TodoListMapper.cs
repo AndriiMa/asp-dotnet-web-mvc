@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace csharp_mvc
 {
-    public class ScheduleMapper
+    public class TodoListMapper
     {
-        public ScheduleDto MapToDto(Schedule obj)
+        public TodoListDto MapToDto(TodoList obj)
         {
-            ScheduleDto dto = new ScheduleDto();
+            TodoListDto dto = new TodoListDto();
             dto.id = obj.GetId();
             dto.name = obj.GetName();
             dto.description = obj.GetDescription();
@@ -16,9 +16,9 @@ namespace csharp_mvc
             return dto;
         }
 
-        public Schedule MapToObject(ScheduleDto dto)
+        public TodoList MapToObject(TodoListDto dto)
         {
-            Schedule obj = new Schedule(
+            TodoList obj = new TodoList(
                 dto.id,
                 dto.name,
                 dto.description
@@ -27,9 +27,9 @@ namespace csharp_mvc
 
         }
 
-        public List<ScheduleDto> MapToList(List<Schedule> entityes)
+        public List<TodoListDto> MapToList(List<TodoList> entityes)
         {
-            List<ScheduleDto> dtos = new List<ScheduleDto>();
+            List<TodoListDto> dtos = new List<TodoListDto>();
             dtos = entityes.Select(e => MapToDto(e))
             .ToList();
 

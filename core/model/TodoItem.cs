@@ -2,7 +2,7 @@ using System;
 
 namespace csharp_mvc
 {
-    public class Goal
+    public class TodoItem
     {
         private int id { get; set; }
         private String name { get; set; }
@@ -10,14 +10,14 @@ namespace csharp_mvc
 
         private int scheduleId { get; set; }
 
-        public Goal(string name, bool done, int scheduleId)
+        public TodoItem(string name, bool done, int scheduleId)
         {
             this.name = name;
             this.done = done;
             this.scheduleId = scheduleId;
         }
 
-        public Goal(int id, string name, bool done, int scheduleId)
+        public TodoItem(int id, string name, bool done, int scheduleId)
         {
             this.id = id;
             this.name = name;
@@ -54,12 +54,12 @@ namespace csharp_mvc
         {
             this.id = id;
         }
-        public int GetScheduleId()
+        public int GetTodoListId()
         {
             return this.scheduleId;
         }
 
-        public void SetScheduleId(int scheduleId)
+        public void SetTodoListId(int scheduleId)
         {
             this.scheduleId = scheduleId;
         }
